@@ -1,0 +1,13 @@
+  <div class="list-group mb-4">
+    <div class="list-group-item">
+      <% if current_user == comment.user%>
+        You
+      <%else%>
+        <h5><%= comment.user.email%></h5>
+      <%end%>
+      <% if current_user == comment.user %>
+        <p><small> <%= link_to "Delete", [comment.post, comment], method: :delete, data: {confirm: 'Are you sure?'} %></small> </p>
+      <%end%>
+      <p class="text-muted border p-3"><%= comment.body %></p>
+    </div>
+  </div>

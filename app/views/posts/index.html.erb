@@ -1,0 +1,62 @@
+
+<div class="container">
+
+  <div class="row mb-3">
+
+    <div class="col">
+      <div class="row mb-2">
+        <%= link_to "New Post", new_post_path, class: "btn btn-primary float-right" %>
+      </div>
+      <div class="row">
+        <% @posts.each do |post|%>
+          <div class="card mb-3">
+            <div class="card-body">
+              Posted by:
+              <% if user_signed_in? %>
+                <span>
+                    <% if current_user == post.user %>
+                      You <%= time_ago_in_words(post.created_at)%> ago 
+                    <%else%>
+                      <%= post.user.email %>
+                    <%end%>
+                </span>
+              <% else %>
+                anonymous
+              <%end%>
+
+              <h5 class="card-title text-dark">Title: <%= post.title %></h5> 
+              <div class="border py-2 px-3 my-2">           
+                <p class="card-text text-muted"><%=truncate(post.body, length: 500, separator: ' ') %></p>
+              </div>
+              <%= link_to "#{post.comments.size} Comments", post %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% if user_signed_in? %>
+      <div class="col-4 mt-5">
+        <% if user_signed_in? %>
+          <div class="card p-3">
+            <div class="card-title">
+              <h5 class="mb-2"> <%= pluralize(User.all.size, "Club Members") %></h5>
+            </div>
+            <div class="card-body border">
+              <% User.all.each do |user|%>
+                  <p class="border-bottom">
+                    <%= user.email %>
+                    created <%= time_ago_in_words(user.created_at)%> ago
+                  </p>
+                  
+                  </li>
+              <%end%>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+
